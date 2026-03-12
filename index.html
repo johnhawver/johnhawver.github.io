@@ -10,404 +10,221 @@
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        :root {
-            --bg: #FFFFFF;
-            --text: #1A1A1A;
-            --text-secondary: #555555;
-            --accent-blue: #E6ECF2;
-            --accent-maize: #FFF9E6;
-            --link: #1A1A1A;
-        }
-
-        html { scroll-behavior: smooth; }
-
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
+            background: #FFFFFF;
+            color: #1A1A1A;
             line-height: 1.7;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ── Layout ── */
-        .container {
-            max-width: 700px;
+        /* ── Page wrapper ── */
+        .page {
+            max-width: 680px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 2rem;
         }
 
-        /* ── Nav ── */
-        nav {
-            padding: 2rem 0 1rem;
+        /* ── Header ── */
+        .site-header {
+            padding: 3rem 0 2rem;
         }
 
-        nav .nav-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav .name {
+        .site-header .name {
+            font-size: 1.5rem;
             font-weight: 700;
-            font-size: 1.05rem;
-            color: var(--text);
-            text-decoration: none;
+            color: #1A1A1A;
+            line-height: 1.3;
         }
 
-        nav .nav-links {
-            display: flex;
-            gap: 1.75rem;
+        .site-header .subtitle {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 1.25rem;
+        }
+
+        .site-header .header-nav {
             list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
         }
 
-        nav .nav-links a {
-            color: var(--text-secondary);
+        .site-header .header-nav a {
+            color: #999;
             text-decoration: none;
             font-size: 0.9rem;
-            font-weight: 500;
+            font-weight: 400;
             transition: color 0.2s;
         }
 
-        nav .nav-links a:hover {
-            color: var(--text);
+        .site-header .header-nav a:hover {
+            color: #1A1A1A;
         }
 
-        /* ── Sections ── */
-        section {
-            padding: 4.5rem 0;
+        /* ── Welcome / Intro ── */
+        .welcome {
+            padding: 5rem 0 4rem;
         }
 
-        .divider {
-            border: none;
-            height: 1px;
-            background: #F0F0F0;
+        .welcome h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.75rem;
+        }
+
+        .welcome p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        /* ── Section shared ── */
+        .section {
+            padding: 3.5rem 0;
         }
 
         .section-heading {
-            font-size: 1.6rem;
+            font-size: 1.3rem;
             font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 2.5rem;
-            color: var(--text);
-        }
-
-        /* ── Intro / Hero ── */
-        .intro {
-            padding: 6rem 0 5rem;
-        }
-
-        .intro h1 {
-            font-size: clamp(2.8rem, 7vw, 4.2rem);
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            margin-bottom: 1.25rem;
-            color: var(--text);
-        }
-
-        .intro p {
-            font-size: clamp(1.1rem, 2.5vw, 1.35rem);
-            color: var(--text-secondary);
-            font-weight: 400;
-            line-height: 1.6;
-        }
-
-        /* ── Education ── */
-        .edu-item {
+            letter-spacing: 0.04em;
             margin-bottom: 2rem;
         }
 
-        .edu-item:last-child {
+        /* ── Left-bordered card (education + experience) ── */
+        .card {
+            border-left: 3px solid #ccc;
+            padding-left: 1.25rem;
+            margin-bottom: 2.25rem;
+        }
+
+        .card:last-child {
             margin-bottom: 0;
         }
 
-        .edu-item .school {
-            display: inline-block;
-            background: var(--accent-blue);
-            color: var(--text);
+        .card .org {
+            font-size: 1.3rem;
             font-weight: 700;
-            font-size: 0.95rem;
-            padding: 0.3rem 0.9rem;
-            border-radius: 100px;
-            margin-bottom: 0.5rem;
+            line-height: 1.3;
+            margin-bottom: 0.2rem;
         }
 
-        .edu-item .degree {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text);
-            margin-bottom: 0.15rem;
-        }
-
-        .edu-item .period {
+        .card .detail {
             font-size: 0.9rem;
-            color: var(--text-secondary);
+            color: #555;
+            line-height: 1.6;
         }
 
-        /* ── Experiences ── */
-        .exp-item {
-            margin-bottom: 2.5rem;
-            transition: background 0.2s;
-            padding: 1.25rem;
-            margin-left: -1.25rem;
-            margin-right: -1.25rem;
-            border-radius: 12px;
-        }
-
-        .exp-item:hover {
-            background: var(--accent-maize);
-        }
-
-        .exp-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .exp-item .company {
-            display: inline-block;
-            background: var(--text);
-            color: var(--bg);
-            font-weight: 700;
+        .card .meta {
             font-size: 0.85rem;
-            padding: 0.25rem 0.8rem;
-            border-radius: 100px;
-            margin-bottom: 0.5rem;
-        }
-
-        .exp-item .role {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text);
-            margin-bottom: 0.15rem;
-        }
-
-        .exp-meta {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .exp-meta span {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        /* ── Skills ── */
-        .skills-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-        }
-
-        .skill-pill {
-            background: var(--accent-blue);
-            color: var(--text);
-            font-size: 0.9rem;
-            font-weight: 500;
-            padding: 0.4rem 1rem;
-            border-radius: 100px;
-            transition: background 0.2s;
-        }
-
-        .skill-pill:hover {
-            background: var(--accent-maize);
-        }
-
-        /* ── Courses ── */
-        .course-item {
-            display: flex;
-            align-items: baseline;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            padding: 0.75rem 1rem;
-            margin-left: -1rem;
-            margin-right: -1rem;
-            border-radius: 10px;
-            transition: background 0.2s;
-        }
-
-        .course-item:hover {
-            background: var(--accent-maize);
-        }
-
-        .course-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .course-item .code {
-            font-weight: 700;
-            font-size: 0.85rem;
-            background: var(--accent-blue);
-            padding: 0.2rem 0.7rem;
-            border-radius: 100px;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .course-item .title {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
+            color: #999;
+            margin-top: 0.5rem;
         }
 
         /* ── Connect ── */
         .connect {
-            padding: 4.5rem 0 6rem;
+            padding: 4rem 0 5rem;
         }
 
         .connect p {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            line-height: 1.7;
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 0.5rem;
         }
 
         .connect-links {
             display: flex;
-            gap: 0.4rem;
             align-items: center;
+            gap: 0.25rem;
             flex-wrap: wrap;
         }
 
         .connect-links a {
-            color: var(--text);
+            color: #1A1A1A;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.95rem;
-            padding: 0.3rem 0.6rem;
-            border-radius: 6px;
-            transition: background 0.2s;
         }
 
         .connect-links a:hover {
-            background: var(--accent-maize);
+            text-decoration: underline;
         }
 
         .connect-links .sep {
-            color: #ccc;
-            font-weight: 300;
-            user-select: none;
-        }
-
-        /* ── Footer ── */
-        footer {
-            padding: 2rem 0 3rem;
-            text-align: center;
-            font-size: 0.8rem;
             color: #bbb;
+            margin: 0 0.35rem;
+            user-select: none;
         }
 
         /* ── Responsive ── */
         @media (max-width: 600px) {
-            .intro { padding: 4rem 0 3.5rem; }
-            section { padding: 3rem 0; }
-            .connect { padding: 3rem 0 4rem; }
-
-            .exp-item {
-                padding: 1rem;
-                margin-left: -1rem;
-                margin-right: -1rem;
-            }
-
-            .exp-meta { flex-direction: column; gap: 0.2rem; }
-
-            .course-item {
-                flex-direction: column;
-                gap: 0.3rem;
-                align-items: flex-start;
-            }
+            .page { padding: 0 1.25rem; }
+            .welcome { padding: 3.5rem 0 3rem; }
+            .welcome h1 { font-size: 1.8rem; }
+            .section { padding: 2.5rem 0; }
+            .card .org { font-size: 1.1rem; }
+            .connect { padding: 2.5rem 0 3.5rem; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="page">
 
-    <!-- Nav -->
-    <nav>
-        <div class="nav-inner">
-            <a href="#" class="name">john hawver</a>
-            <ul class="nav-links">
-                <li><a href="#education">education</a></li>
-                <li><a href="#experience">experience</a></li>
-                <li><a href="#connect">connect</a></li>
-            </ul>
-        </div>
-    </nav>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="name">john hawver</div>
+        <div class="subtitle">computer engineering</div>
+        <ul class="header-nav">
+            <li><a href="#education">education</a></li>
+            <li><a href="#experience">experience</a></li>
+            <li><a href="#connect">connect</a></li>
+        </ul>
+    </header>
 
-    <!-- Intro -->
-    <section class="intro">
+    <!-- Welcome -->
+    <section class="welcome">
         <h1>WELCOME!!</h1>
         <p>my name is John and i love to build things!</p>
     </section>
 
-    <hr class="divider">
-
     <!-- Education -->
-    <section id="education">
+    <section class="section" id="education">
         <h2 class="section-heading">EDUCATION</h2>
 
-        <div class="edu-item">
-            <span class="school">university of michigan</span>
-            <p class="degree">b.s. in computer engineering</p>
-            <p class="period">expected 2028</p>
+        <div class="card">
+            <div class="org">university of michigan</div>
+            <div class="detail">b.s. in computer engineering</div>
+            <div class="meta">expected 2028</div>
         </div>
     </section>
 
-    <hr class="divider">
-
-    <!-- Skills -->
-    <section id="skills">
-        <h2 class="section-heading">SKILLS</h2>
-        <div class="skills-list">
-            <span class="skill-pill">C++</span>
-            <span class="skill-pill">Python</span>
-            <span class="skill-pill">Verilog</span>
-            <span class="skill-pill">Git</span>
-            <span class="skill-pill">Linux</span>
-            <span class="skill-pill">Embedded Systems</span>
-            <span class="skill-pill">Robotics</span>
-        </div>
-    </section>
-
-    <hr class="divider">
-
-    <!-- Courses -->
-    <section id="courses">
-        <h2 class="section-heading">CURRENT COURSES</h2>
-
-        <div class="course-item">
-            <span class="code">EECS 280</span>
-            <span class="title">Programming &amp; Intro Data Structures</span>
-        </div>
-        <div class="course-item">
-            <span class="code">ENGR 100</span>
-            <span class="title">Introduction to Engineering</span>
-        </div>
-        <div class="course-item">
-            <span class="code">MATH 116</span>
-            <span class="title">Calculus II</span>
-        </div>
-    </section>
-
-    <hr class="divider">
-
-    <!-- Experience -->
-    <section id="experience">
+    <!-- Experiences -->
+    <section class="section" id="experience">
         <h2 class="section-heading">EXPERIENCES</h2>
 
-        <div class="exp-item">
-            <span class="company">seeking opportunities</span>
-            <p class="role">open to internships &amp; research positions</p>
-            <div class="exp-meta">
-                <span>embedded systems, robotics, software engineering</span>
-            </div>
+        <div class="card">
+            <div class="org">michigan autonomous aerial vehicles</div>
+            <div class="detail">software engineer</div>
+            <div class="meta">ann arbor, mi</div>
+        </div>
+
+        <div class="card">
+            <div class="org">michigan student ai lab</div>
+            <div class="detail">machine learning research assistant</div>
+            <div class="meta">ann arbor, mi</div>
+        </div>
+
+        <div class="card">
+            <div class="org">engineering business group</div>
+            <div class="detail">analyst</div>
+            <div class="meta">ann arbor, mi</div>
         </div>
     </section>
-
-    <hr class="divider">
 
     <!-- Connect -->
     <section class="connect" id="connect">
-        <p>you can find me on these platforms:</p>
+        <p>you can find me on these professional networks:</p>
         <div class="connect-links">
             <a href="https://linkedin.com/" target="_blank" rel="noopener">linkedin</a>
             <span class="sep">|</span>
@@ -416,10 +233,6 @@
             <a href="mailto:jhawver@umich.edu">email</a>
         </div>
     </section>
-
-    <footer>
-        <p>&copy; 2026 john hawver</p>
-    </footer>
 
 </div>
 
