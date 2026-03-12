@@ -2,20 +2,435 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>John Hawver | U-M Computer Engineering</title>
     <style>
-        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background-color: #00274C; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { text-align: center; border: 2px solid #FFCB05; padding: 40px; border-radius: 15px; background-color: rgba(255,255,255,0.05); }
-        h1 { color: #FFCB05; margin-bottom: 5px; }
-        p { font-size: 1.2em; margin-top: 0; opacity: 0.8; }
-        .status { background: #FFCB05; color: #00274C; padding: 5px 10px; border-radius: 5px; font-weight: bold; display: inline-block; margin-top: 20px; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #00274C;
+            --navy-light: #003366;
+            --maize: #FFCB05;
+            --maize-dim: rgba(255, 203, 5, 0.15);
+            --text: #e0e0e0;
+            --surface: rgba(255, 255, 255, 0.04);
+            --surface-hover: rgba(255, 255, 255, 0.08);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+            background-color: var(--navy);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ── Navigation ── */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 39, 76, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 203, 5, 0.12);
+            z-index: 100;
+            padding: 0 2rem;
+        }
+
+        nav .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--maize);
+            letter-spacing: 0.5px;
+        }
+
+        nav .nav-links { display: flex; gap: 2rem; list-style: none; }
+
+        nav .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        nav .nav-links a::after {
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--maize);
+            transition: width 0.25s ease;
+        }
+
+        nav .nav-links a:hover { color: var(--maize); }
+        nav .nav-links a:hover::after { width: 100%; }
+
+        /* ── Shared Section Styles ── */
+        section { padding: 6rem 2rem; }
+
+        .section-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--maize);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 2rem;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 60px;
+            background:
+                radial-gradient(ellipse at 30% 20%, rgba(255, 203, 5, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 80%, rgba(0, 51, 102, 0.4) 0%, transparent 50%);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+
+        .hero h1 .accent { color: var(--maize); }
+
+        .hero .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.35rem);
+            color: var(--text);
+            opacity: 0.85;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--maize);
+            color: var(--navy);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(255, 203, 5, 0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--maize);
+            border: 2px solid var(--maize);
+        }
+
+        .btn-outline:hover {
+            background: var(--maize);
+            color: var(--navy);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(255, 203, 5, 0.25);
+        }
+
+        /* ── About ── */
+        .about { background: var(--navy-light); }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .about-text { font-size: 1.05rem; line-height: 1.8; }
+
+        .about-highlights {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .highlight-card {
+            background: var(--surface);
+            border: 1px solid rgba(255, 203, 5, 0.1);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            transition: border-color 0.25s, background 0.25s;
+        }
+
+        .highlight-card:hover {
+            border-color: rgba(255, 203, 5, 0.35);
+            background: var(--surface-hover);
+        }
+
+        .highlight-card h3 {
+            color: var(--maize);
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .highlight-card p { font-size: 0.9rem; opacity: 0.8; }
+
+        /* ── Skills ── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .skill-card {
+            background: var(--surface);
+            border: 1px solid rgba(255, 203, 5, 0.08);
+            border-radius: 12px;
+            padding: 2rem 1.25rem;
+            text-align: center;
+            transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--maize);
+            box-shadow: 0 8px 30px rgba(255, 203, 5, 0.1);
+        }
+
+        .skill-card .icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .skill-card h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+
+        .skill-card p {
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        /* ── Courses ── */
+        .courses { background: var(--navy-light); }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .course-card {
+            background: var(--surface);
+            border: 1px solid rgba(255, 203, 5, 0.08);
+            border-radius: 12px;
+            padding: 1.75rem;
+            transition: border-color 0.25s, background 0.25s;
+        }
+
+        .course-card:hover {
+            border-color: rgba(255, 203, 5, 0.35);
+            background: var(--surface-hover);
+        }
+
+        .course-card .code {
+            display: inline-block;
+            background: var(--maize-dim);
+            color: var(--maize);
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+        }
+
+        .course-card h3 { color: #fff; font-size: 1.1rem; margin-bottom: 0.4rem; }
+        .course-card p { font-size: 0.9rem; opacity: 0.75; }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255, 203, 5, 0.1);
+            font-size: 0.85rem;
+            opacity: 0.5;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            nav .nav-links { gap: 1.25rem; }
+            .about-content { grid-template-columns: 1fr; }
+            section { padding: 4rem 1.25rem; }
+        }
+
+        @media (max-width: 480px) {
+            nav .nav-links a { font-size: 0.8rem; }
+            nav .logo { font-size: 1rem; }
+            .hero .btn-group { flex-direction: column; align-items: center; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>John Hawver</h1>
-        <p>Computer Engineering @ University of Michigan</p>
-        <div class="status">Freshman | Portfolio v1.0 Launching...</div>
+
+<!-- Navigation -->
+<nav>
+    <div class="nav-inner">
+        <span class="logo">JH</span>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#courses">Courses</a></li>
+        </ul>
     </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+    <div class="section-inner">
+        <h1>John <span class="accent">Hawver</span></h1>
+        <p class="subtitle">Computer Engineering &bull; University of Michigan</p>
+        <div class="btn-group">
+            <a href="#about" class="btn btn-primary">Learn More</a>
+            <a href="https://github.com/" class="btn btn-outline" target="_blank" rel="noopener">GitHub</a>
+        </div>
+    </div>
+</section>
+
+<!-- About -->
+<section class="about" id="about">
+    <div class="section-inner">
+        <p class="section-label">About Me</p>
+        <h2 class="section-title">Engineering What Comes Next</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>
+                    I'm a freshman in Computer Engineering at the University of Michigan,
+                    driven by a passion for building systems that bridge hardware and software.
+                    My core interests lie in <strong>Embedded Systems</strong> and
+                    <strong>Robotics</strong>&mdash;designing the low-level firmware and control
+                    logic that bring autonomous machines to life.
+                </p>
+                <br>
+                <p>
+                    Whether it's writing bare-metal C++ for a microcontroller or modeling
+                    digital circuits in Verilog, I'm drawn to work where every clock cycle
+                    and every byte of memory matters.
+                </p>
+            </div>
+            <div class="about-highlights">
+                <div class="highlight-card">
+                    <h3>Embedded Systems</h3>
+                    <p>Microcontrollers, firmware development, real-time operating systems, and hardware-software co-design.</p>
+                </div>
+                <div class="highlight-card">
+                    <h3>Robotics</h3>
+                    <p>Sensor integration, control algorithms, and autonomous navigation systems.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technical Skills -->
+<section class="skills" id="skills">
+    <div class="section-inner">
+        <p class="section-label">Technical Skills</p>
+        <h2 class="section-title">Tools &amp; Technologies</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <span class="icon">&lt;/&gt;</span>
+                <h3>C++</h3>
+                <p>Systems &amp; Embedded</p>
+            </div>
+            <div class="skill-card">
+                <span class="icon">&#x1F40D;</span>
+                <h3>Python</h3>
+                <p>Scripting &amp; Automation</p>
+            </div>
+            <div class="skill-card">
+                <span class="icon">&#x1F500;</span>
+                <h3>Git</h3>
+                <p>Version Control</p>
+            </div>
+            <div class="skill-card">
+                <span class="icon">&#x1F4BB;</span>
+                <h3>Linux</h3>
+                <p>CLI &amp; Administration</p>
+            </div>
+            <div class="skill-card">
+                <span class="icon">&#x26A1;</span>
+                <h3>Verilog</h3>
+                <p>Digital Design &amp; HDL</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Current Courses -->
+<section class="courses" id="courses">
+    <div class="section-inner">
+        <p class="section-label">Current Courses</p>
+        <h2 class="section-title">Winter 2026 Semester</h2>
+        <div class="courses-grid">
+            <div class="course-card">
+                <span class="code">EECS 280</span>
+                <h3>Programming &amp; Intro Data Structures</h3>
+                <p>Object-oriented programming, abstract data types, and algorithmic problem-solving in C++.</p>
+            </div>
+            <div class="course-card">
+                <span class="code">ENGR 100</span>
+                <h3>Introduction to Engineering</h3>
+                <p>Hands-on multidisciplinary design experience and collaborative engineering projects.</p>
+            </div>
+            <div class="course-card">
+                <span class="code">MATH 116</span>
+                <h3>Calculus II</h3>
+                <p>Integration techniques, sequences, series, and applications to engineering problems.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2026 John Hawver &mdash; Built with HTML &amp; CSS</p>
+</footer>
+
 </body>
 </html>
