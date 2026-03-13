@@ -18,48 +18,73 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ── Page wrapper ── */
-        .page {
-            max-width: 680px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* ── Header ── */
+        /* ── Header (two-column like Simon's) ── */
         .site-header {
-            padding: 3rem 0 2rem;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 2rem;
+            padding: 3rem 3rem 2rem;
+            max-width: 960px;
+            margin: 0 auto;
         }
 
-        .site-header .name {
-            font-size: 1.5rem;
+        .header-left {
+            padding-top: 0.25rem;
+        }
+
+        .header-left .name {
+            font-size: 1.45rem;
             font-weight: 700;
             color: #1A1A1A;
             line-height: 1.3;
         }
 
-        .site-header .subtitle {
-            font-size: 0.9rem;
+        .header-left .subtitle {
+            font-size: 0.85rem;
             color: #888;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
-        .site-header .header-nav {
+        .header-left .header-nav {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 0.15rem;
+            gap: 0.1rem;
         }
 
-        .site-header .header-nav a {
+        .header-left .header-nav a {
             color: #999;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 400;
             transition: color 0.2s;
         }
 
-        .site-header .header-nav a:hover {
+        .header-left .header-nav a:hover {
             color: #1A1A1A;
+        }
+
+        .header-photo {
+            width: 100%;
+            max-width: 520px;
+            aspect-ratio: 4 / 5;
+            overflow: hidden;
+            border-radius: 2px;
+            justify-self: end;
+        }
+
+        .header-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ── Content column ── */
+        .content {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         /* ── Welcome / Intro ── */
@@ -91,7 +116,7 @@
             margin-bottom: 2rem;
         }
 
-        /* ── Left-bordered card (education + experience) ── */
+        /* ── Left-bordered card ── */
         .card {
             border-left: 3px solid #ccc;
             padding-left: 1.25rem;
@@ -157,8 +182,20 @@
         }
 
         /* ── Responsive ── */
-        @media (max-width: 600px) {
-            .page { padding: 0 1.25rem; }
+        @media (max-width: 700px) {
+            .site-header {
+                grid-template-columns: 1fr;
+                padding: 2rem 1.5rem 1.5rem;
+                gap: 1.5rem;
+            }
+
+            .header-photo {
+                max-width: 100%;
+                aspect-ratio: 4 / 3;
+                justify-self: start;
+            }
+
+            .content { padding: 0 1.5rem; }
             .welcome { padding: 3.5rem 0 3rem; }
             .welcome h1 { font-size: 1.8rem; }
             .section { padding: 2.5rem 0; }
@@ -169,10 +206,9 @@
 </head>
 <body>
 
-<div class="page">
-
-    <!-- Header -->
-    <header class="site-header">
+<!-- Header -->
+<header class="site-header">
+    <div class="header-left">
         <div class="name">john hawver</div>
         <div class="subtitle">computer engineering</div>
         <ul class="header-nav">
@@ -180,11 +216,19 @@
             <li><a href="#experience">experience</a></li>
             <li><a href="#connect">connect</a></li>
         </ul>
-    </header>
+    </div>
+    <div class="header-photo">
+        <!-- Replace src with your own photo -->
+        <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=800&q=80" alt="John Hawver">
+    </div>
+</header>
+
+<!-- Main content -->
+<div class="content">
 
     <!-- Welcome -->
     <section class="welcome">
-        <h1>WELCOME!!</h1>
+        <h1>Hello There!</h1>
         <p>my name is John and i love to build things!</p>
     </section>
 
@@ -193,8 +237,8 @@
         <h2 class="section-heading">EDUCATION</h2>
 
         <div class="card">
-            <div class="org">university of michigan</div>
-            <div class="detail">b.s. in computer engineering</div>
+            <div class="org">University of Michigan</div>
+            <div class="detail">B.S. in Computer Engineering</div>
             <div class="meta">expected 2028</div>
         </div>
     </section>
@@ -204,21 +248,21 @@
         <h2 class="section-heading">EXPERIENCES</h2>
 
         <div class="card">
-            <div class="org">michigan autonomous aerial vehicles</div>
-            <div class="detail">software engineer</div>
-            <div class="meta">ann arbor, mi</div>
+            <div class="org">Michigan Autonomous Aerial Vehicles</div>
+            <div class="detail">Software Engineer</div>
+            <div class="meta">Ann Arbor, MI</div>
         </div>
 
         <div class="card">
-            <div class="org">michigan student ai lab</div>
-            <div class="detail">machine learning research assistant</div>
-            <div class="meta">ann arbor, mi</div>
+            <div class="org">Michigan Student AI Lab</div>
+            <div class="detail">Machine Learning Research Assistant</div>
+            <div class="meta">Ann Arbor, MI</div>
         </div>
 
         <div class="card">
-            <div class="org">engineering business group</div>
-            <div class="detail">analyst</div>
-            <div class="meta">ann arbor, mi</div>
+            <div class="org">Engineering Business Group</div>
+            <div class="detail">Analyst</div>
+            <div class="meta">Ann Arbor, MI</div>
         </div>
     </section>
 
